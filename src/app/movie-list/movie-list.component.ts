@@ -1,12 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Movie, MovieService } from '../service/movie.service';
 
 @Component({
   selector: 'app-movie-list',
   standalone: false,
-  
   templateUrl: './movie-list.component.html',
-  styleUrl: './movie-list.component.css'
+  styleUrls: ['./movie-list.component.css'],
 })
-export class MovieListComponent {
+export class MovieListComponent implements OnInit {
+  movies: Movie[] = [];
+  genreFilter: string = '';
+  ratingFilter: number = 0;
 
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit(): void {
+    this.movieService.getMovies().subscribe((movies) => {
+      this.movies = movies;
+    });
+  }
+
+  get filteredMovies(): Movie[] {
+    if (!this.movies || this.movies.length === 0) {
+      return [];
+    }
+
+    return this.movies.filter((movie) => {
+      const genreMatch =
+        !this.genreFilter ||
+        movie.genre.toLowerCase().includes(this.genreFilter.toLowerCase());
+      const ratingMatch = movie.rating >= this.ratingFilter;
+      return genreMatch && ratingMatch;
+    });
+  }
 }
