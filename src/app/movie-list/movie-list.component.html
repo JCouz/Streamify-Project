@@ -30,7 +30,14 @@
     <span class="text-gray-700">Minimum Rating: {{ ratingFilter }}</span>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <button
+    (click)="clearFilters()"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Clear Filters
+  </button>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
     <div
       *ngFor="let movie of filteredMovies"
       class="bg-white rounded-lg shadow-md p-4"

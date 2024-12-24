@@ -33,4 +33,9 @@ export class MovieListComponent implements OnInit {
       return genreMatch && ratingMatch;
     });
   }
+
+  clearFilters(): void {
+    this.genreFilter = '';
+    this.ratingFilter = 0;
+  }
 }
