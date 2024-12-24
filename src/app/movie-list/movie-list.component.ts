@@ -9,7 +9,7 @@ import { Movie, MovieService } from '../service/movie.service';
 })
 export class MovieListComponent implements OnInit {
   movies: Movie[] = [];
-  genreFilter: string = '';
+  searchQuery: string = '';
   ratingFilter: number = 0;
 
   constructor(private movieService: MovieService) {}
@@ -26,16 +26,17 @@ export class MovieListComponent implements OnInit {
     }
 
     return this.movies.filter((movie) => {
-      const genreMatch =
-        !this.genreFilter ||
-        movie.genre.toLowerCase().includes(this.genreFilter.toLowerCase());
+      const searchMatch =
+        !this.searchQuery ||
+        movie.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        movie.genre.toLowerCase().includes(this.searchQuery.toLowerCase());
       const ratingMatch = movie.rating >= this.ratingFilter;
-      return genreMatch && ratingMatch;
+      return searchMatch && ratingMatch;
     });
   }
 
   clearFilters(): void {
-    this.genreFilter = '';
+    this.searchQuery = '';
     this.ratingFilter = 0;
   }
 }
